@@ -8,7 +8,15 @@ def calculate_fuel(mass):
     return mass//3 - 2
 
 
+def calculate_fuel_recursive(mass):
+    fuel = calculate_fuel(mass)
+    if fuel < 0:
+        return 0
+    else:
+        return fuel + calculate_fuel_recursive(fuel)
+
+
 if __name__ == "__main__":
-    mass_measurements = get_input("input.txt")
-    fuel_needs = [calculate_fuel(mass) for mass in mass_measurements]
-    print("Total fuel required = {} units".format(sum(fuel_needs)))
+    masses = get_input("input.txt")
+    fuel_needed_recursive = [calculate_fuel_recursive(mass) for mass in masses]
+    print("Total fuel required = {} units".format(sum(fuel_needed_recursive)))
