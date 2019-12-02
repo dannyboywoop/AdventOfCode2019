@@ -19,8 +19,8 @@ def calculate_fuel_recursive(mass):
 if __name__ == "__main__":
     masses = get_input("input.txt")
 
-    fuel_needed = [calculate_fuel_(mass) for mass in masses]
-    print("Fuel needed = {} units".format(sum(fuel_needed_recursive)))
+    fuel_needed = [calculate_fuel(mass) for mass in masses]
+    print("Fuel needed = {} units".format(sum(fuel_needed)))
 
     fuel_needed_recursive = [calculate_fuel_recursive(mass) for mass in masses]
     print("Recursive fuel needed = {} units".format(sum(fuel_needed_recursive)))
