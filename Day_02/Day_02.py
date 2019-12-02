@@ -44,8 +44,21 @@ def initialise(input_data, noun, verb):
     return data
 
 
+def find_start_vals(program_data, output):
+    for i in range(0, 100):
+        for j in range(0, 100):
+            data = initialise(program_data, i, j)
+            if process(data) == output:
+                return i, j
+    return None
+
+
 if __name__ == "__main__":
     program_data = get_input()
 
     star_one = process(initialise(program_data, 12, 2))
     print("Star_01 Answer: {}".format(star_one))
+
+    noun, verb = find_start_vals(program_data, 19690720)
+    star_two = 100*noun + verb
+    print("Star_02 Answer: {}".format(star_two))
