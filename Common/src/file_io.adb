@@ -35,7 +35,7 @@ package body File_IO is
       --Read lines into string array
       declare
          strings : Str_Arr(1..Count_Lines(input));
-         i : integer:=1;
+         i : Natural:=1;
       begin
          while not End_Of_File (input) loop
             strings(i):=To_Unbounded_String(Get_Line(input));
