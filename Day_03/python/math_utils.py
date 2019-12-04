@@ -6,6 +6,15 @@ def is_between(value, boundaries):
     return start <= value <= end
 
 
+def is_point_on_line(point, line):
+    if line.is_vertical() and point.x == line.start.x:
+        return is_between(point.y, (line.start.y, line.end.y))
+    elif line.is_horizontal() and point.y == line.start.y:
+        return is_between(point.x, (line.start.x, line.end.x))
+    else:
+        return False
+
+
 def get_perp_intersection(vertical, horizontal):
     if (is_between(vertical.start.x,
                    (horizontal.start.x, horizontal.end.x))

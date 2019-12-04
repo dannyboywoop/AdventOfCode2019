@@ -19,6 +19,17 @@ def get_closest_intersect(intersections):
     return closest_distance
 
 
+def get_shortest_delay(intersections, wires):
+    shortest_delay = float('inf')
+    for intersection in intersections:
+        total_steps = 0
+        for wire in wires:
+            total_steps += wire.number_of_steps(intersection)
+        if 0 < total_steps < shortest_delay:
+            shortest_delay = total_steps
+    return shortest_delay
+
+
 def parse_file(filename):
     with open(filename, 'r') as input_file:
         wires = [Wire(line.split(',')) for line in input_file]
@@ -32,3 +43,6 @@ if __name__ == "__main__":
 
     closest_distance = get_closest_intersect(intersections)
     print("Star_one: {}".format(closest_distance))
+
+    shortest_delay = get_shortest_delay(intersections, wires)
+    print("Star_two: {}".format(shortest_delay))
