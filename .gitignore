@@ -7,3 +7,5 @@
 **/obj
 
 **/lib
+
+**/__pycache__
