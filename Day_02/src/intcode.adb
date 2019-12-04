@@ -4,7 +4,7 @@ with Array_Stuff; use Array_Stuff;
 package body Intcode is
 
    function Initialise_Program(program_data: Int_Arr; 
-                                noun, verb: Integer) return Int_Arr is
+                               noun, verb: Integer) return Int_Arr is
       initialised_data: Int_Arr:= program_data;
    begin
       initialised_data(program_data'First + 1) := noun;
@@ -47,5 +47,20 @@ package body Intcode is
       end loop;
       return program_data(program_data'First);
    end Run_Program;
+   
+   function Find_Start_Vals(program_data: Int_Arr; 
+                            desired_result: Integer) return Integer is
+      data: Int_Arr(program_data'Range);
+   begin
+      for i in 0..99 loop
+         for j in 0..99 loop
+            data := Initialise_Program(program_data, i, j);
+            if Run_Program(data) = desired_result then
+               return 100*i + j;
+            end if;
+         end loop;
+      end loop;
+      return -1;
+   end Find_Start_Vals;
 
 end Intcode;

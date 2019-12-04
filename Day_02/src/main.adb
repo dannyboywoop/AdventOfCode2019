@@ -10,8 +10,11 @@ procedure Main is
    strings: Str_Arr:=Split(input, ",");
    program_data: Int_Arr:=Str_To_Int_Array(strings);
    star_one_data: Int_Arr:=Initialise_Program(program_data, 12, 2);
-   star_one: Integer;
+   star_one, star_two: Integer;
 begin
    star_one:= Run_Program(star_one_data);
    Put_Line("Star one: "&Integer'Image(star_one));
+
+   star_two:= Find_Start_Vals(program_data, 19690720);
+   Put_Line("Star two: "&Integer'Image(star_two));
 end Main;

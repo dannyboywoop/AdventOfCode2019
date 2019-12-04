@@ -8,6 +8,9 @@ package Intcode is
    
    function Initialise_Program(program_data: Int_Arr; 
                                 noun, verb: Integer) return Int_Arr;
+   
+   function Find_Start_Vals(program_data: Int_Arr; 
+                            desired_result: Integer) return Integer;
 private
 
    function Run_Operation(program_data: in out Int_Arr;
