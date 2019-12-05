@@ -52,6 +52,36 @@ def output(data, i, param_modes):
     return i+2
 
 
+def jump_if_true(data, i, param_modes):
+    pad_parameter_modes(param_modes, 2)
+    if get_value(data, i+1, param_modes[0]):
+        return get_value(data, i+2, param_modes[1])
+    return i+3
+
+
+def jump_if_false(data, i, param_modes):
+    pad_parameter_modes(param_modes, 2)
+    if not(get_value(data, i+1, param_modes[0])):
+        return get_value(data, i+2, param_modes[1])
+    return i+3
+
+
+def less_than(data, i, param_modes):
+    pad_parameter_modes(param_modes, 3)
+    value = int(get_value(data, i+1, param_modes[0])
+                < get_value(data, i+2, param_modes[1]))
+    data[data[i+3]] = value
+    return i+4
+
+
+def equals(data, i, param_modes):
+    pad_parameter_modes(param_modes, 3)
+    value = int(get_value(data, i+1, param_modes[0])
+                == get_value(data, i+2, param_modes[1]))
+    data[data[i+3]] = value
+    return i+4
+
+
 def halt(data, i, param_modes):
     return -1
 
@@ -61,6 +91,10 @@ operations = {
         2: multiply,
         3: get_input,
         4: output,
+        5: jump_if_true,
+        6: jump_if_false,
+        7: less_than,
+        8: equals,
         99: halt
 }
 
@@ -76,4 +110,4 @@ def process(data):
 if __name__ == "__main__":
     program_data = get_program_data()
 
-    star_one = process(program_data)
+    process(program_data)
