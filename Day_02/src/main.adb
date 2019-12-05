@@ -13,8 +13,8 @@ procedure Main is
    star_one, star_two: Integer;
 begin
    star_one:= Run_Program(star_one_data);
-   Put_Line("Star one: "&Integer'Image(star_one));
+   Put_Line("Star one: "&star_one'Image);
 
    star_two:= Find_Start_Vals(program_data, 19690720);
-   Put_Line("Star two: "&Integer'Image(star_two));
+   Put_Line("Star two: "&star_two'Image);
 end Main;
