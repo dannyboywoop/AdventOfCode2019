@@ -10,14 +10,14 @@ package body Array_Stuff is
    end Str_To_Int_Array;
 
 
-   function Apply_To_Elements(input: T_Arr) return T_Arr is
+   function Transform_Elements(input: T_Arr) return T_Arr is
       output : T_Arr(input'Range);
    begin
       for i in input'Range loop
          output(i) := Transform(input(i));
       end loop;
       return output;
-   end Apply_To_Elements;
+   end Transform_Elements;
 
 
    function Sum_Elements(input: T_Arr; zero: T) return T is

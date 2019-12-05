@@ -11,7 +11,7 @@ package Array_Stuff is
       type T is private;
       with function Transform(X: T) return T;
       type T_Arr is array (Natural range <>) of T;
-   function Apply_To_Elements(input: T_Arr) return T_Arr;
+   function Transform_Elements(input: T_Arr) return T_Arr;
    
    generic
       type T is private;

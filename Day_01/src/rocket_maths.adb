@@ -21,11 +21,11 @@ package body Rocket_Maths is
    
    
    function Get_Required_Fuel(masses: Int_Arr; recursive:Boolean) return Integer is
-      function Get_Each_Fuel_Cost is new Apply_To_Elements(T => Integer,
+      function Get_Each_Fuel_Cost is new Transform_Elements(T => Integer,
                                                            T_Arr => Int_Arr,
                                                            Transform => Calculate_Fuel_Cost);
          
-      function Get_Each_Fuel_Cost_Recursive is new Apply_To_Elements(T => Integer,
+      function Get_Each_Fuel_Cost_Recursive is new Transform_Elements(T => Integer,
                                                                      T_Arr => Int_Arr,
                                                                      Transform => Calculate_Recursive_Fuel_Cost);
       function Sum_Ints is new Sum_Elements(T => Integer,

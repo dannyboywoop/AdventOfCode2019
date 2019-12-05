@@ -5,5 +5,5 @@ procedure Main is
    strings : Str_Arr:=Read_File;
    masses : Int_Arr:=Str_To_Int_Array(strings);
 begin
-   Put_Line(Integer'Image(Get_Required_Fuel(masses, True)));
+   Put_Line(Get_Required_Fuel(masses, True)'Image);
 end Main;
