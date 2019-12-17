@@ -21,7 +21,7 @@ class Amplifier():
 
         Intcode.input = mock_input
         Intcode.print = lambda s: self.output.append(s)
-        self.computer.process_all()
+        self.computer.process_until_output()
         return self.output[-1]
 
 
@@ -30,6 +30,15 @@ def run_amplification_circuit(program, phase_data, initial_val=0):
     for phase in phase_data:
         amplifier = Amplifier(program, phase)
         output = amplifier.amplify(output)
+    return output
+
+
+def run_feedback_circuit(program, phase_data, initial_val=0):
+    amplifiers = [Amplifier(program, phase) for phase in phase_data]
+    output = initial_val
+    while not amplifiers[-1].computer.halted:
+        for amplifier in amplifiers:
+            output = amplifier.amplify(output)
     return output
 
 
@@ -42,6 +51,16 @@ def star_one(program):
     return highest_signal
 
 
+def star_two(program):
+    highest_signal = 0
+    phase_combinations = permutations(FEEDBACK_PHASE_SETTINGS)
+    for phase_setting in phase_combinations:
+        signal = run_feedback_circuit(program, phase_setting)
+        highest_signal = max(highest_signal, signal)
+    return highest_signal
+
+
 if __name__ == "__main__":
     program = Intcode.get_program_data("../input.txt")
     print("Star 1: {}".format(star_one(program)))
+    print("Star 2: {}".format(star_two(program)))

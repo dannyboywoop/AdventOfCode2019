@@ -99,7 +99,18 @@ class Intcode_Computer:
     }
 
     def process_all(self):
-        while 0 <= self.index < len(self.program_data):
+        while not self.halted:
             opcode, param_modes = self._get_operation()
             self._operations[opcode](self, param_modes)
-        return self.program_data[0]
+
+    def process_until_output(self):
+        outputted = False
+        while not self.halted and not outputted:
+            opcode, param_modes = self._get_operation()
+            self._operations[opcode](self, param_modes)
+            if self._operations[opcode].__name__ == self._output.__name__:
+                outputted = True
+
+    @property
+    def halted(self):
+        return (self.index < 0 or self.index >= len(self.program_data))
