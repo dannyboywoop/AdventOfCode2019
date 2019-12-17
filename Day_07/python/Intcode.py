@@ -1,6 +1,3 @@
-from copy import deepcopy
-
-
 def get_program_data(filename="input.txt"):
     with open(filename, "r") as file:
         data = [int(x) for x in file.read().split(",")]
@@ -102,8 +99,7 @@ operations = {
 }
 
 
-def process(program):
-    data = deepcopy(program)
+def process(data):
     index = 0
     while 0 <= index < len(data):
         opcode, param_modes = get_operation(data[index])

@@ -1,25 +1,36 @@
 from itertools import permutations
+from copy import deepcopy
 import Intcode
 PHASE_SETTINGS = range(5)
+FEEDBACK_PHASE_SETTINGS = range(5, 10)
 
 
-def amplify(program, phase, initial_val):
-    output = []
-    input_vals = [phase, initial_val]
+class Amplifier():
+    def __init__(self, program, phase):
+        self.program = program
+        self.phase = phase
+        self.phase_set = False
 
-    def mock_input(input_request):
-        return input_vals.pop(0)
+    def amplify(self, initial_val):
+        output = []
 
-    Intcode.input = mock_input
-    Intcode.print = lambda s: output.append(s)
-    Intcode.process(program)
-    return output
+        def mock_input(input_request):
+            if not self.phase_set:
+                self.phase_set = True
+                return self.phase
+            return initial_val
+
+        Intcode.input = mock_input
+        Intcode.print = lambda s: output.append(s)
+        Intcode.process(program)
+        return output[0]
 
 
 def run_amplification_circuit(program, phase_data, initial_val=0):
     output = initial_val
     for phase in phase_data:
-        output = amplify(program, phase, output)[0]
+        amplifier = Amplifier(deepcopy(program), phase)
+        output = amplifier.amplify(output)
     return output
 
 
