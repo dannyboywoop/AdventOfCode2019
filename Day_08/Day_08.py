@@ -37,6 +37,28 @@ def star_one(layers):
     return result
 
 
+def star_two(layers):
+    result = []
+    for i in range(LAYER_SIZE):
+        for layer in layers:
+            if int(layer[i]) < 2:
+                result.append(int(layer[i]))
+                break
+    return result
+
+
+def print_image(image_data):
+    scale = 10
+    img = Image.new("RGB", (COLUMNS, ROWS), "black")
+    pixels = img.load()
+    for row in range(ROWS):
+        for col in range(COLUMNS):
+            pixels[col, row] = RGB_COLOURS[image_data[row*COLUMNS + col]]
+    img_scaled = img.resize((COLUMNS*scale, ROWS*scale), Image.NEAREST)
+    img_scaled.show()
+
+
 if __name__ == "__main__":
     layers = read_layers()
     print("Star_one: {}".format(star_one(layers)))
+    print_image(star_two(layers))
