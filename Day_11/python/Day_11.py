@@ -69,6 +69,38 @@ def star_one(program):
     print("Star 1: {}".format(len(panels_painted)))
 
 
+def get_hull_size(panels_painted):
+    max_x = 0
+    min_x = 0
+    max_y = 0
+    min_y = 0
+    for panel_x, panel_y in panels_painted.keys():
+        max_x = max(max_x, panel_x)
+        min_x = min(min_x, panel_x)
+        max_y = max(max_y, panel_y)
+        min_y = min(min_y, panel_y)
+    return min_x, max_x-min_x+1, max_y, max_y-min_y+1
+
+
+def print_hull(panels_painted):
+    scale = 10
+    min_x, x_range, max_y, y_range = get_hull_size(panels_painted)
+
+    img = Image.new("RGB", (x_range, y_range), "black")
+    pixels = img.load()
+    for (panel_x, panel_y), colour in panels_painted.items():
+        pixels[panel_x-min_x, max_y-panel_y] = RGB_COLOURS[colour]
+    img_scaled = img.resize((x_range*scale, y_range*scale), Image.NEAREST)
+    img_scaled.show()
+
+
+def star_two(program):
+    panels_painted = {(0, 0): 1}
+    robot = Hull_Painting_Robot(program, panels_painted)
+    robot.paint_all()
+    print_hull(panels_painted)
+
 if __name__ == "__main__":
     program = Intcode.get_program_data("../input.txt")
     star_one(program)
+    star_two(program)
