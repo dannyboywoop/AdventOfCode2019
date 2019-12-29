@@ -1,6 +1,7 @@
 from re import match
 from itertools import combinations
-import numpy as np
+from numpy import sign
+from math import gcd
 from copy import deepcopy
 
 
@@ -68,17 +69,17 @@ def apply_gravity(bodies):
     pairs_of_bodies = combinations(bodies, 2)
     for (body_a, body_b) in pairs_of_bodies:
         # apply x-component of gravity
-        x_grav_on_a = np.sign(body_b.x-body_a.x)
+        x_grav_on_a = sign(body_b.x-body_a.x)
         body_a.vx += x_grav_on_a
         body_b.vx -= x_grav_on_a
 
         # apply y-component of gravity
-        y_grav_on_a = np.sign(body_b.y-body_a.y)
+        y_grav_on_a = sign(body_b.y-body_a.y)
         body_a.vy += y_grav_on_a
         body_b.vy -= y_grav_on_a
 
         # apply z-component of gravity
-        z_grav_on_a = np.sign(body_b.z-body_a.z)
+        z_grav_on_a = sign(body_b.z-body_a.z)
         body_a.vz += z_grav_on_a
         body_b.vz -= z_grav_on_a
 
@@ -104,6 +105,48 @@ def star_one(bodies):
     print("Star 1: {}".format(energy))
 
 
+def lowest_common_multiple(numbers):
+    lcm = numbers[0]
+    for number in numbers[1:]:
+        lcm = lcm * number // gcd(lcm, number)
+    return lcm
+
+
+def star_two(bodies):
+    cloned_bodies = deepcopy(bodies)
+    steps = 0
+    x_steps = -1
+    y_steps = -1
+    z_steps = -1
+    while True:
+        time_step(cloned_bodies)
+        steps += 1
+        x_matches = True
+        y_matches = True
+        z_matches = True
+        for i in range(len(bodies)):
+            x_matches &= cloned_bodies[i].x == bodies[i].x
+            x_matches &= cloned_bodies[i].vx == bodies[i].vx
+            y_matches &= cloned_bodies[i].y == bodies[i].y
+            y_matches &= cloned_bodies[i].vy == bodies[i].vy
+            z_matches &= cloned_bodies[i].z == bodies[i].z
+            z_matches &= cloned_bodies[i].vz == bodies[i].vz
+        if x_matches and x_steps < 0:
+            x_steps = steps
+            print("x loops every {} steps".format(steps))
+        if y_matches and y_steps < 0:
+            y_steps = steps
+            print("y loops every {} steps".format(steps))
+        if z_matches and z_steps < 0:
+            z_steps = steps
+            print("z loops every {} steps".format(steps))
+        if x_steps > 0 and y_steps > 0 and z_steps > 0:
+            break
+    cycle_length = lowest_common_multiple([x_steps, y_steps, z_steps])
+    print("Star 2: {}".format(cycle_length))
+
+
 if __name__ == "__main__":
     bodies = read_file()
     star_one(bodies)
+    star_two(bodies)
