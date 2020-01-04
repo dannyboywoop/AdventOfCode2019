@@ -12,27 +12,18 @@ def always_increasing(value):
 
 
 def repeated_digit(value):
-    previous_digit = ""
-    for digit in str(value):
-        if digit == previous_digit:
+    string_val = str(value)
+    for digit in string_val:
+        if string_val.count(digit) > 1:
             return True
-        previous_digit = digit
     return False
 
 
 def double_digit(value):
-    previous_digit = ""
-    repetition_count = 0
-    for digit in str(value):
-        if digit == previous_digit:
-            repetition_count += 1
-        else:
-            if repetition_count == 2:
-                return True
-            repetition_count = 1
-        previous_digit = digit
-    if repetition_count == 2:
-        return True
+    string_val = str(value)
+    for digit in string_val:
+        if string_val.count(digit) == 2:
+            return True
     return False
 
 
